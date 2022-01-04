@@ -1,0 +1,17 @@
+h1{
+    text-align: center;
+}
+.menu-items{
+    border: 1px solid skyblue;
+    border-width: 1px 0;
+    list-style: none;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    
+}
+.menu-items li{
+    display: inline-block;
+    width: 25%;
+    margin: auto;
+}
