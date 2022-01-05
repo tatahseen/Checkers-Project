@@ -24,17 +24,20 @@ button {
 .player-score *{
     display: inline-block;
     width: 49%;
-    position: relative;
 }
 
 .board{
     text-align: center;
 }
 
+
+.turn-info p{
+    text-align: left;
+}
 .turn-info{
-    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column nowrap;
 }
 
-.turn-info *{
-
-}
