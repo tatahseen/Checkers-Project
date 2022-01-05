@@ -9,5 +9,32 @@ h1{
     padding: 15px 0px 15px 0px;
     display: flex;
     justify-content: space-around;
-    
+}
+
+button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.player-score {
+    text-align: center;
+}
+
+.player-score *{
+    display: inline-block;
+    width: 49%;
+    position: relative;
+}
+
+.board{
+    text-align: center;
+}
+
+.turn-info{
+    position: absolute;
+}
+
+.turn-info *{
+
 }
