@@ -1,5 +1,9 @@
+body {
+  background-color: black;
+}
 h1{
     text-align: center;
+    color: royalblue;
 }
 .menu{
     border: 1px solid skyblue;
@@ -13,6 +17,7 @@ h1{
 
 button {
     background-color: transparent;
+    color:greenyellow;
     border: none;
     outline: none;
     cursor: pointer;
@@ -24,19 +29,45 @@ table {
 }
 
 td {
-    background-color:sienna;
+    background-color:royalblue;
     width: 50px;
     height: 50px ;
+    text-align: center;
     
 }
+
 .x {
-    background-color:wheat;
+    background-color:paleturquoise;
 }
+
+.r{
+    border-radius: 50%;
+    background-color:violet;
+    box-shadow: 
+    0 0 5px 5px #fff,
+    0 0 5px 5px #f0f;
+    padding: 5px 22px 5px 5px;
+    /* background-color:rgb(175, 86, 226); */
+    /* border: 1px solid white; */
+    /* border-radius: 50px; */
+}
+
+.b{
+    border-radius: 50px;
+    padding: 5px 22px 5px 5px;
+    background-color:lime;
+    box-shadow: 
+    0 0 5px 5px #fff,
+    0 0 5px 5px rgba(0, 255, 115, 0.808);
+    /* border: 1px solid white; */
+}
+
 .player-score {
     text-align: center;
 }
 
 .player-score *{
+    color:hotpink;
     display: inline-block;
     width: 49%;
 }
@@ -47,6 +78,7 @@ td {
 
 
 .turn-info p{
+    color:yellow;
     text-align: left;
 }
 .turn-info{
