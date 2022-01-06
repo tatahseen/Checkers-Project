@@ -32,15 +32,6 @@ playerScore2.innerHTML += "0";
 
 currentPlayer.innerHTML = "Current Turn:  Player 2"
 
-// function addBorder() {
-//     selected.style.border = "3px solid lime";
-//     console.log();
-// }
-// function removeBorders() {
-//     for(let i = 0; i < pinkPieces.length; i++){
-//         pinkPieces[i].style.border = "none"
-//     }
-// }
 
 function updateSelectedPiece(curr) {
     for(let i = 0; i < squares.length; i++){
@@ -96,46 +87,50 @@ function getMoves(selectedPiece) {
         getSpaces();
 
         //getJumps();
-
-        // Check if element is a king
-        // if(table.rows[rowIndex].cells[colIndex].firstElementChild.classList.contains("king")){
-        //     // Check if it can move in the diagonal directions
-        // }
-        // else{
-        //     // Check if it can move in the two forward directions
-        //     getSpaces()
-        //     console.log(possibleMoves)
-        //     console.log("NOT A KING")
-        //     // addBorder()
-        // }
         console.log(selectedPiece);
-        //if(selectedPiece.class)
-       // if(isKing() == true){
-        //    checkFourMoves(selectedPiece)
-        //}
-       // else{
-           // checkForwardMoves(selectedPiece)
-       // }
+   
         console.log("VALID")
     }
- //   console.log(selectedPiece)
 }
 
-function makeMove(){
+function makeMove(moveChoice){
+    let parent = selected.parentElement;
+    let curId = selected.id;
+    moveChoice.style.border = "none";
+    selected.classList.remove("pink");
+    selected.parentElement.removeChild(selected);
+    console.log(parent)
+    parent.classList.add("o");
+    console.log(parent.classList)
 
+
+    console.log(moveChoice)
+    let newChild = document.createElement("span");
+    newChild.classList.add("pink");
+    newChild.setAttribute('id', curId);
+    moveChoice.appendChild(newChild);
+    console.log(moveChoice)
 }
 
+function addEventsBlank() {
+    for(let i = 0; i < possibleMoves.length; ++i){
+        possibleMoves[i].style.border = "1px solid red";
+        possibleMoves[i].addEventListener('click', () => {
+            makeMove(possibleMoves[i]);
+        })
+
+    }
+
+}
 
 function addEvents() {
     if(pinkTurn == true){
         for(let i = 0; i < pinkPieces.length; i++){
             pinkPieces[i].addEventListener('click', () => {
-            possibleMoves = []
-            selected = pinkPieces[i];
-            getMoves(pinkPieces[i])
-            console.log(possibleMoves);
-            makeMove();
-            // removeBorders();
+                selected = pinkPieces[i];
+                getMoves(pinkPieces[i])
+                addEventsBlank()
+                console.log(possibleMoves);
             
             })
         }
@@ -149,47 +144,6 @@ function addEvents() {
 
 addEvents()
 
-// function getPieces() {
-//     if(pinkTurn == true){
-//         currPieces = pinkPieces;
-//         console.log("PINK SELECTED")
-//     }
-//     else{
-//         currPieces = orangePieces
-//         console.log("ORANGE SELECTED")
-//     }
-// }
-
-// function updateTurn(){
-//     if(pinkTurn == true){
-//         pinkTurn = false;
-//         orangeTurn = true;
-//         currentPlayer.innerHTML = "Current Turn:  Player 2"
-//     }
-//     else{
-//         orangeTurn = false;
-//         pinkTurn = true;
-//         currentPlayer.innerHTML = "Current Turn:  Player 1"
-//     }
-// }
-
-// function addEventListeners(){
-//     if(pinkTurn == true){
-//         for(let i = 0; i < pinkPieces.length; i++){
-//             pinkPieces[i].addEventListener('click', () => getPieces());
-//         }
-       
-//     }
-//     else{
-//         for(let i = 0; i < orangePieces.length; i++){
-//             orangePieces[i].addEventListener('click', () => getPieces());
-//         }
-//     }
-//}
-
-
-//;addEventListeners();
-//updateTurn();
 
 
 
