@@ -43,7 +43,7 @@ td {
     background-color:paleturquoise;
 }
 
-.r{
+.pink{
     border-radius: 50%;
     background-color:violet;
     box-shadow: 
@@ -52,13 +52,21 @@ td {
     padding: 5px 22px 5px 5px;
 }
 
-.b{
+.orange{
     border-radius: 50%;
     padding: 5px 22px 5px 5px;
-    background-color:lime;
+    background-color:orange;
     box-shadow: 
     0 0 5px 5px #fff,
-    0 0 5px 5px rgba(0, 255, 115, 0.808);
+    0 0 5px 5px rgba(255, 187, 0, 0.658);
+}
+
+.king.pink{
+    background-color:deeppink;
+}
+
+.king.orange{
+    background-color:rgb(139, 75, 14);
 }
 
 .player-score {
@@ -86,4 +94,6 @@ td {
     align-items: center;
     flex-flow: column nowrap;
 }
+
+
 
