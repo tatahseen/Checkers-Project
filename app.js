@@ -18,13 +18,6 @@ let rowIndex;
 let colIndex;
 let currPieces;
 
-let board = [-1, 1, -1, 2, -1, 3, -1, 4, 
-              5, -1, 6, -1, 7, -1, 8, -1,
-             -1, 9, -1, 10, -1, 11, -1, 12, 
-              0, -1, 0, -1, 0, -1, 0, -1, 
-              -1, 0, -1, 0, -1, 0, -1, 0,
-            ]
-
 
 // Set initial score
 playerScore1.innerHTML += "0";
@@ -32,6 +25,7 @@ playerScore2.innerHTML += "0";
 
 currentPlayer.innerHTML = "Current Turn:  Player 2"
 
+console.log(squares);
 
 function updateSelectedPiece(curr) {
     for(let i = 0; i < squares.length; i++){
@@ -46,21 +40,24 @@ function updateSelectedPiece(curr) {
 
 function getSpaces(){
     let isKing = selected.classList.contains("king")
+
+    // Absolute value
     let left = table.rows[rowIndex+1].cells[colIndex-1];
     let right = table.rows[rowIndex+1].cells[colIndex+1] 
     let backLeft = table.rows[rowIndex-1].cells[colIndex-1]
     let backRight = table.rows[rowIndex-1].cells[colIndex+1]
-    console.log(table.rows[3].cells[0]);
+
     if(left != null && left.classList.contains("o") ) {
         if(pinkTurn || (orangeTurn && isKing)) {
             possibleMoves.push(left);
-            console.log("POSSIBLE SPACE")
+            console.log("MOVE DOWN LEFT");
+            
         }
     }
     if(right != null && right.classList.contains("o") ) {
         if(pinkTurn || (orangeTurn && isKing)) {
             possibleMoves.push(right);
-            console.log("POSSIBLE SPACE")
+            console.log("MOVE DOWN RIGHT")
         }
     }
     if(backLeft != null && backLeft.classList.contains("o") ) {
@@ -96,9 +93,12 @@ function getMoves(selectedPiece) {
 function makeMove(moveChoice){
     let parent = selected.parentElement;
     let curId = selected.id;
+    for(let i = 0; i < possibleMoves.length; i++){
+        possibleMoves[i].style.border = "none";
+    }
     moveChoice.style.border = "none";
     selected.classList.remove("pink");
-    selected.parentElement.removeChild(selected);
+    parent.removeChild(selected);
     console.log(parent)
     parent.classList.add("o");
     console.log(parent.classList)
@@ -110,6 +110,8 @@ function makeMove(moveChoice){
     newChild.setAttribute('id', curId);
     moveChoice.appendChild(newChild);
     console.log(moveChoice)
+    possibleMoves = [];
+
 }
 
 function addEventsBlank() {
