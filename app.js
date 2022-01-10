@@ -40,12 +40,36 @@ function updateSelectedPiece(curr) {
 
 function getSpaces(){
     let isKing = selected.classList.contains("king")
+    let left;
+    let right;
+    let backLeft;
+    let backRight;
 
     // Absolute value
-    let left = table.rows[rowIndex+1].cells[colIndex-1];
-    let right = table.rows[rowIndex+1].cells[colIndex+1] 
-    let backLeft = table.rows[rowIndex-1].cells[colIndex-1]
-    let backRight = table.rows[rowIndex-1].cells[colIndex+1]
+    if(rowIndex > 0){
+        if(colIndex > 0){
+            backLeft = table.rows[rowIndex-1].cells[colIndex-1]
+        }
+        else if(colIndex < 7) {
+            backRight = table.rows[rowIndex-1].cells[colIndex+1]
+        }
+    }
+
+    if(rowIndex < 7) {
+        if(colIndex > 0){
+            left = table.rows[rowIndex+1].cells[colIndex-1];
+        }
+        else if(colIndex < 7) {
+            right = table.rows[rowIndex+1].cells[colIndex+1] 
+        }
+    }
+
+    
+    // if(colIndex  )
+    // left = table.rows[rowIndex+1].cells[colIndex-1];
+    // right = table.rows[rowIndex+1].cells[colIndex+1] 
+    // let backLeft = table.rows[rowIndex-1].cells[colIndex-1]
+    // let backRight = table.rows[rowIndex-1].cells[colIndex+1]
 
     if(left != null && left.classList.contains("o") ) {
         if(pinkTurn || (orangeTurn && isKing)) {
@@ -90,13 +114,25 @@ function getMoves(selectedPiece) {
     }
 }
 
-function makeMove(moveChoice){
-    let parent = selected.parentElement;
-    let curId = selected.id;
-    for(let i = 0; i < possibleMoves.length; i++){
+function removeEventsBlank() {
+    for(let i = 0; i < possibleMoves.length; ++i){
         possibleMoves[i].style.border = "none";
+        possibleMoves[i].removeEventListener('click', console.log("Removed event listener"))
+
     }
-    moveChoice.style.border = "none";
+}
+
+function makeMove(moveChoice){
+    console.log(squares)
+    removeEventsBlank();
+    let parent = selected.parentElement;
+    console.log("SELECTED MOVE: ",selected);
+    console.log("LOCATION TO MOVE TO: ", moveChoice);
+    let curId = selected.id;
+
+  
+
+    console.log(squares)
     selected.classList.remove("pink");
     parent.removeChild(selected);
     console.log(parent)
@@ -108,11 +144,14 @@ function makeMove(moveChoice){
     let newChild = document.createElement("span");
     newChild.classList.add("pink");
     newChild.setAttribute('id', curId);
+    moveChoice.classList.remove("o")
     moveChoice.appendChild(newChild);
     console.log(moveChoice)
+   // removeEventsBlank()
     possibleMoves = [];
 
 }
+
 
 function addEventsBlank() {
     for(let i = 0; i < possibleMoves.length; ++i){
@@ -128,7 +167,8 @@ function addEventsBlank() {
 function addEvents() {
     if(pinkTurn == true){
         for(let i = 0; i < pinkPieces.length; i++){
-            pinkPieces[i].addEventListener('click', () => {
+            pinkPieces[i].addEventListener('click', (e) => {
+                e.stopImmediatePropagation()
                 selected = pinkPieces[i];
                 getMoves(pinkPieces[i])
                 addEventsBlank()
