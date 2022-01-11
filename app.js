@@ -118,7 +118,7 @@ function removeEventsBlank() {
 }
 
 function makeMove(){
-   moveChoice = this;
+    moveChoice = this;
     console.log("POSSIBLE MOVES: ",possibleMoves)
     let parent = selected.parentElement;
     console.log("SELECTED MOVE: ",selected);
@@ -141,6 +141,15 @@ function makeMove(){
     newChild.setAttribute('id', curId);
     moveChoice.classList.remove("o")
     moveChoice.appendChild(newChild);
+    newChild.addEventListener('click', (e) => {
+        removeEventsBlank();
+        possibleMoves = []
+        e.stopImmediatePropagation()
+        console.log(squares)
+        selected = newChild;
+        getMoves(newChild)
+        addEventsBlank()
+    })
     console.log(moveChoice)
     removeEventsBlank()
     possibleMoves = [];
@@ -166,7 +175,6 @@ function addEvents() {
                 selected = pinkPieces[i];
                 getMoves(pinkPieces[i])
                 addEventsBlank()
-                //console.log(possibleMoves);
             
             })
         }
