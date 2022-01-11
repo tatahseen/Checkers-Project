@@ -12,7 +12,6 @@ let playerScore1 = document.querySelector("#score1");
 let playerScore2 = document.querySelector("#score2");
 let currentPlayer = document.querySelector("#cur-move");
 let outputSelected = document.querySelector("#selected");
-let movePiece = document.querySelector("#move");
 
 let selected;
 let rowIndex;
@@ -26,7 +25,18 @@ playerScore2.innerHTML += "0";
 
 currentPlayer.innerHTML = "Current Turn:  Player 2"
 
-console.log(squares);
+function updatePlayerTurn(){
+    if(pinkTurn == true){
+        pinkTurn = false;
+        orangeTurn = true;
+        addEvents()
+    }
+    else if(pinkTurn == false){
+        pinkTurn = true;
+        orangeTurn = false;
+        addEvents()
+    }
+}
 
 function updateSelectedPiece(curr) {
     for(let i = 0; i < squares.length; i++){
@@ -87,7 +97,7 @@ function getSpaces(){
     if(backRight != null && backRight.classList.contains("o") ) {
         if(orangeTurn || (pinkTurn && isKing)) {
             possibleMoves.push(backRight);
-            console.log("MOVE UP RIGHT: ", backRightx)
+            console.log("MOVE UP RIGHT: ", backRight)
         }
     }
 }
@@ -105,6 +115,19 @@ function getMoves(selectedPiece) {
         console.log(selectedPiece);
    
         console.log("VALID")
+    }
+
+    else if(orangeTurn == true && selectedPiece.id > 12){
+        // Get row and index and update the page
+        updateSelectedPiece(selectedPiece);
+
+        // Get possible spaces
+        getSpaces();
+
+            //getJumps();
+            console.log(selectedPiece);
+   
+            console.log("VALID")
     }
 }
 
@@ -128,7 +151,12 @@ function makeMove(){
   
 
     console.log(squares)
-    selected.classList.remove("pink");
+    if(pinkTurn){
+        selected.classList.remove("pink");
+    }
+    else {
+        selected.classList.remove("orange");
+    }
     parent.removeChild(selected);
     console.log(parent)
     parent.classList.add("o");
@@ -137,7 +165,15 @@ function makeMove(){
 
     console.log(moveChoice)
     let newChild = document.createElement("span");
-    newChild.classList.add("pink");
+    
+    if(pinkTurn){
+        newChild.classList.add("pink");
+    }
+    else {
+        newChild.classList.add("orange");
+    }
+
+ 
     newChild.setAttribute('id', curId);
     moveChoice.classList.remove("o")
     moveChoice.appendChild(newChild);
@@ -153,6 +189,7 @@ function makeMove(){
     console.log(moveChoice)
     removeEventsBlank()
     possibleMoves = [];
+    updatePlayerTurn();
 
 }
 
@@ -181,12 +218,21 @@ function addEvents() {
     }
     else{
         for(let i = 0; i < orangePieces.length; i++){
-            orangePieces[i].addEventListener('click', getMoves() )
+            orangePieces[i].addEventListener('click', (e) => {
+                removeEventsBlank();
+                possibleMoves = []
+                e.stopImmediatePropagation()
+                console.log(squares)
+                selected = orangePieces[i];
+                getMoves(orangePieces[i])
+                addEventsBlank()
+            })
         }
     }
 }
 
 addEvents()
+
 
 
 
