@@ -158,7 +158,6 @@ function getJumps() {
 
     if(left != null && left.hasChildNodes() && jumpLeft != null && jumpLeft.classList.contains("o")) {
         if((pinkTurn && left.firstChild.classList.contains("orange")) || (orangeTurn && isKing && left.firstChild.classList.contains("pink")) ) {
-            left.classList.add("remove");
             possibleMoves.push(jumpLeft)
             console.log("JUMP LEFT: ", jumpLeft)
         }
@@ -166,7 +165,6 @@ function getJumps() {
 
     if(right != null && right.hasChildNodes() && jumpRight != null && jumpRight.classList.contains("o")){
         if((pinkTurn && right.firstChild.classList.contains("orange")) || (orangeTurn && isKing && right.firstChild.classList.contains("pink")) ) {
-            right.classList.add("remove");
             possibleMoves.push(jumpRight)
             console.log("JUMP RIGHT: ", jumpRight)
         }
@@ -174,14 +172,12 @@ function getJumps() {
     
     if(backLeft != null && backLeft.hasChildNodes() && jumpBackLeft != null && jumpBackLeft.classList.contains("o")) {
         if((orangeTurn && backLeft.firstChild.classList.contains("pink")) || (pinkTurn && isKing && backLeft.firstChild.classList.contains("orange")) ) {
-            backLeft.classList.add("remove");
             possibleMoves.push(jumpBackLeft)
             console.log("JUMP UP LEFT: ", jumpBackLeft)
         }
     }
     if(backRight != null && backRight.hasChildNodes() && jumpBackRight != null && jumpBackRight.classList.contains("o")) {
         if((orangeTurn && backRight.firstChild.classList.contains("pink")) || (pinkTurn && isKing && backRight.firstChild.classList.contains("orange")) ) {
-            backRight.classList.add("remove")
             possibleMoves.push(jumpBackRight)
             console.log("JUMP UP RIGHT: ", jumpBackRight)
         }
@@ -226,11 +222,9 @@ function removePiece() {
         if(squares[i].classList.contains("remove")){
             if(squares[i].firstChild.classList.contains("pink")){
                 orangeScore++;
-                console.log("ADD TO ORANGE SCORE")
                 playerScore1.innerHTML = `Score: ${orangeScore}`;
             }
             else if(squares[i].firstChild.classList.contains("orange")){
-                console.log("ADD TO PINK SCORE")
                 pinkScore++;
                 playerScore2.innerHTML = `Score: ${pinkScore}`;
             }
@@ -250,17 +244,37 @@ function removeEventsBlank() {
     }
 }
 
+function checkRemovePiece(move) {
+
+    if(move == table.rows[rowIndex-2].cells[colIndex+2]) {
+        let piece = table.rows[rowIndex-1].cells[colIndex + 1]
+        piece.classList.add("remove");
+    }
+        
+    else if(move == table.rows[rowIndex-2].cells[colIndex-2]){
+        let piece = table.rows[rowIndex-1].cells[colIndex-1]
+        piece.classList.add("remove");
+    }
+    else if(move == table.rows[rowIndex+2].cells[colIndex+2]) {
+        let piece = table.rows[rowIndex+1].cells[colIndex+1]
+        piece.classList.add("remove");
+
+    }
+    else if(move == table.rows[rowIndex+2].cells[colIndex-2]){
+        let piece = table.rows[rowIndex+1].cells[colIndex-1]
+        piece.classList.add("remove");
+         
+      }
+}
+
 function makeMove(){
     moveChoice = this;
-    console.log("POSSIBLE MOVES: ",possibleMoves)
     let parent = selected.parentElement;
-    console.log("SELECTED MOVE: ",selected);
-    console.log("LOCATION TO MOVE TO: ", moveChoice);
     let curId = selected.id;
-
-   
-
+    
+    checkRemovePiece(moveChoice)
     removePiece()
+   
 
     console.log(squares)
     if(pinkTurn){
