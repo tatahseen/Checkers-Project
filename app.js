@@ -1,4 +1,5 @@
 let possibleMoves = [];
+let move;
 let pieceRemove = false;
 let pinkTurn = true;
 let orangeTurn = false;
@@ -50,7 +51,7 @@ function getSpaces(){
         if(colIndex > 0){
             backLeft = table.rows[rowIndex-1].cells[colIndex-1]
         }
-        else if(colIndex < 7) {
+        if(colIndex < 7) {
             backRight = table.rows[rowIndex-1].cells[colIndex+1]
         }
     }
@@ -59,41 +60,34 @@ function getSpaces(){
         if(colIndex > 0){
             left = table.rows[rowIndex+1].cells[colIndex-1];
         }
-        else if(colIndex < 7) {
+        if(colIndex < 7) {
             right = table.rows[rowIndex+1].cells[colIndex+1] 
         }
     }
 
-    
-    // if(colIndex  )
-    // left = table.rows[rowIndex+1].cells[colIndex-1];
-    // right = table.rows[rowIndex+1].cells[colIndex+1] 
-    // let backLeft = table.rows[rowIndex-1].cells[colIndex-1]
-    // let backRight = table.rows[rowIndex-1].cells[colIndex+1]
-
     if(left != null && left.classList.contains("o") ) {
         if(pinkTurn || (orangeTurn && isKing)) {
             possibleMoves.push(left);
-            console.log("MOVE DOWN LEFT");
+            console.log("MOVE DOWN LEFT: ", left);
             
         }
     }
     if(right != null && right.classList.contains("o") ) {
         if(pinkTurn || (orangeTurn && isKing)) {
             possibleMoves.push(right);
-            console.log("MOVE DOWN RIGHT")
+            console.log("MOVE DOWN RIGHT: ", right)
         }
     }
     if(backLeft != null && backLeft.classList.contains("o") ) {
         if(orangeTurn || (pinkTurn && isKing)) {
             possibleMoves.push(backLeft);
-            console.log("POSSIBLE SPACE")
+            console.log("MOVE UP LEFT: ", backLeft)
         }
     }
     if(backRight != null && backRight.classList.contains("o") ) {
         if(orangeTurn || (pinkTurn && isKing)) {
             possibleMoves.push(backRight);
-            console.log("POSSIBLE SPACE")
+            console.log("MOVE UP RIGHT: ", backRightx)
         }
     }
 }
@@ -117,13 +111,15 @@ function getMoves(selectedPiece) {
 function removeEventsBlank() {
     for(let i = 0; i < possibleMoves.length; ++i){
         possibleMoves[i].style.border = "none";
-        possibleMoves[i].removeEventListener('click', console.log("Removed event listener"))
-
+        let c = possibleMoves[i];
+        console.log(possibleMoves[i]);
+        possibleMoves[i].removeEventListener('click', makeMove)
     }
 }
 
-function makeMove(moveChoice){
-    console.log(squares)
+function makeMove(){
+    moveChoice = move;
+    console.log("POSSIBLE MOVES: ",possibleMoves)
     removeEventsBlank();
     let parent = selected.parentElement;
     console.log("SELECTED MOVE: ",selected);
@@ -152,14 +148,11 @@ function makeMove(moveChoice){
 
 }
 
-
 function addEventsBlank() {
     for(let i = 0; i < possibleMoves.length; ++i){
         possibleMoves[i].style.border = "1px solid red";
-        possibleMoves[i].addEventListener('click', () => {
-            makeMove(possibleMoves[i]);
-        })
-
+        move = possibleMoves[i];
+        possibleMoves[i].addEventListener('click', makeMove )
     }
 
 }
@@ -168,11 +161,14 @@ function addEvents() {
     if(pinkTurn == true){
         for(let i = 0; i < pinkPieces.length; i++){
             pinkPieces[i].addEventListener('click', (e) => {
+                removeEventsBlank();
+                possibleMoves = []
                 e.stopImmediatePropagation()
+                console.log(squares)
                 selected = pinkPieces[i];
                 getMoves(pinkPieces[i])
                 addEventsBlank()
-                console.log(possibleMoves);
+                //console.log(possibleMoves);
             
             })
         }
