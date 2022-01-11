@@ -54,6 +54,15 @@ function updateSelectedPiece(curr) {
     }
 }
 
+function checkWin() {
+    if(orangeScore == 12){
+        currentPlayer.innerHTML = "Player 1 Wins!!"
+    }
+    else if(pinkScore == 12) {
+        currentPlayer.innerHTML = "Player 2 Wins!!"
+    }
+}
+
 function getSpaces(){
     let isKing = selected.classList.contains("king")
     let left;
@@ -233,6 +242,7 @@ function removePiece() {
             squares[i].removeChild(squares[i].firstChild)
         }
     }
+
 }
 
 function removeEventsBlank() {
@@ -246,25 +256,29 @@ function removeEventsBlank() {
 
 function checkRemovePiece(move) {
 
-    if(move == table.rows[rowIndex-2].cells[colIndex+2]) {
-        let piece = table.rows[rowIndex-1].cells[colIndex + 1]
-        piece.classList.add("remove");
-    }
-        
-    else if(move == table.rows[rowIndex-2].cells[colIndex-2]){
-        let piece = table.rows[rowIndex-1].cells[colIndex-1]
-        piece.classList.add("remove");
-    }
-    else if(move == table.rows[rowIndex+2].cells[colIndex+2]) {
-        let piece = table.rows[rowIndex+1].cells[colIndex+1]
-        piece.classList.add("remove");
 
+    if(rowIndex > 1){
+        if(colIndex < 6 && move == table.rows[rowIndex-2].cells[colIndex+2]){
+            let piece = table.rows[rowIndex-1].cells[colIndex + 1]
+            piece.classList.add("remove");
+        }
+        if(colIndex > 1 && move == table.rows[rowIndex-2].cells[colIndex-2]) {
+            let piece = table.rows[rowIndex-1].cells[colIndex-1]
+            piece.classList.add("remove")
+        }
     }
-    else if(move == table.rows[rowIndex+2].cells[colIndex-2]){
-        let piece = table.rows[rowIndex+1].cells[colIndex-1]
-        piece.classList.add("remove");
-         
-      }
+    if(rowIndex < 6){
+        if(colIndex < 6 && move == table.rows[rowIndex+2].cells[colIndex+2]){
+            let piece = table.rows[rowIndex+1].cells[colIndex+1]
+            piece.classList.add("remove");
+    
+        }
+
+        if(colIndex > 1 && move == table.rows[rowIndex+2].cells[colIndex-2]) {
+            let piece = table.rows[rowIndex+1].cells[colIndex-1]
+            piece.classList.add("remove");
+        }
+    }
 }
 
 function makeMove(){
@@ -318,6 +332,7 @@ function makeMove(){
     removeEventsBlank()
     possibleMoves = [];
     updatePlayerTurn();
+    checkWin();
 
 }
 
@@ -340,6 +355,7 @@ function addEvents() {
                 selected = pinkPieces[i];
                 getMoves(pinkPieces[i])
                 addEventsBlank()
+                checkWin();
             
             })
         }
