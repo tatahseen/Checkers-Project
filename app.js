@@ -102,6 +102,80 @@ function getSpaces(){
     }
 }
 
+function getJumps() {
+    let isKing = selected.classList.contains("king")
+    let left;
+    let right;
+    let backLeft;
+    let backRight;
+    let jumpLeft;
+    let jumpRight;
+    let jumpBackLeft;
+    let jumpBackRight;
+
+    if(rowIndex > 0){
+        if(colIndex > 0){
+            backLeft = table.rows[rowIndex-1].cells[colIndex-1]
+        }
+        if(colIndex < 7) {
+            backRight = table.rows[rowIndex-1].cells[colIndex+1]
+        }
+    }
+
+    if(rowIndex > 1){
+        if(colIndex > 1){
+            jumpBackLeft = table.rows[rowIndex-2].cells[colIndex-2]
+        }
+        if(colIndex < 6) {
+            jumpBackRight = table.rows[rowIndex-2].cells[colIndex+2]
+        }
+    }
+
+    if(rowIndex < 7) {
+        if(colIndex > 0){
+            left = table.rows[rowIndex+1].cells[colIndex-1];
+        }
+        if(colIndex < 7) {
+            right = table.rows[rowIndex+1].cells[colIndex+1] 
+        }
+    }
+
+    if(rowIndex < 6) {
+        if(colIndex > 0){
+            jumpLeft = table.rows[rowIndex+2].cells[colIndex-2];
+        }
+        if(colIndex < 7) {
+            jumpRight = table.rows[rowIndex+2].cells[colIndex+2] 
+        }
+    }
+    console.log(left.childNodes.length);
+
+    if(left.hasChildNodes() && jumpLeft != null && jumpLeft.classList.contains("o")) {
+        if((pinkTurn && left.firstChild.classList.contains("orange")) || (orangeTurn && isKing && left.firstChild.classList.contains("pink")) ) {
+            possibleMoves.push(jumpLeft)
+        }
+    }
+    if(right.hasChildNodes() > 0 && jumpRight != null && jumpRight.classList.contains("o")){
+        if((pinkTurn && right.firstChild.classList.contains("orange")) || (orangeTurn && isKing && right.firstChild.classList.contains("pink")) ) {
+            possibleMoves.push(jumpRight)
+        }
+    }
+    
+    if(backLeft.hasChildNodes() && jumpBackLeft != null && jumpBackLeft.classList.contains("o")) {
+        if((orangeTurn && backLeft.firstChild.classList.contains("pink")) || (pinkTurn && isKing && backLeft.firstChild.classList.contains("orange")) ) {
+            possibleMoves.push(jumpBackLeft)
+        }
+    }
+    if(backRight.hasChildNodes() && jumpBackRight != null && jumpBackRight.classList.contains("o")) {
+        if((orangeTurn && backRight.firstChild.classList.contains("pink")) || (pinkTurn && isKing && backLeft.firstChild.classList.contains("orange")) ) {
+            possibleMoves.push(jumpBackLeft)
+        }
+    }
+    
+    
+}
+
+
 function getMoves(selectedPiece) {
     // Make sure if player selected correct piece
     if(pinkTurn == true && selectedPiece.id < 13) {
@@ -112,6 +186,7 @@ function getMoves(selectedPiece) {
         getSpaces();
 
         //getJumps();
+        getJumps()
         console.log(selectedPiece);
    
         console.log("VALID")
@@ -124,10 +199,10 @@ function getMoves(selectedPiece) {
         // Get possible spaces
         getSpaces();
 
-            //getJumps();
-            console.log(selectedPiece);
+        //getJumps();
+        console.log(selectedPiece);
    
-            console.log("VALID")
+        console.log("VALID")
     }
 }
 
