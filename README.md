@@ -20,7 +20,8 @@ For this project, the technologies used included:
 - JavaScript
 
 Getting Started:
-file:///Users/taliatahseen/Desktop/sei1213/unit1/projects/Checkers-Project/index.html
+
+https://tatahseen.github.io/Checkers-Project/
 
 How to play:
     This game is created for two different players to play against one another. The bottom of the board contains player 1's pieces and the top of the board contains player 2's pieces. In this version, player 2 goes first.
