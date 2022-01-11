@@ -1,7 +1,5 @@
 let possibleMoves = [];
-let possibleJumps = [];
 let move;
-let pieceRemove = false;
 let pinkTurn = true;
 let orangeTurn = false;
 let pinkScore = 0;
@@ -95,26 +93,21 @@ function getSpaces(){
     if(left != null && left.classList.contains("o") ) {
         if(pinkTurn || (orangeTurn && isKing)) {
             possibleMoves.push(left);
-            console.log("MOVE DOWN LEFT: ", left);
-            
         }
     }
     if(right != null && right.classList.contains("o") ) {
         if(pinkTurn || (orangeTurn && isKing)) {
             possibleMoves.push(right);
-            console.log("MOVE DOWN RIGHT: ", right)
         }
     }
     if(backLeft != null && backLeft.classList.contains("o") ) {
         if(orangeTurn || (pinkTurn && isKing)) {
             possibleMoves.push(backLeft);
-            console.log("MOVE UP LEFT: ", backLeft)
         }
     }
     if(backRight != null && backRight.classList.contains("o") ) {
         if(orangeTurn || (pinkTurn && isKing)) {
             possibleMoves.push(backRight);
-            console.log("MOVE UP RIGHT: ", backRight)
         }
     }
 }
@@ -171,27 +164,23 @@ function getJumps() {
     if(left != null && left.hasChildNodes() && jumpLeft != null && jumpLeft.classList.contains("o")) {
         if((pinkTurn && left.firstChild.classList.contains("orange")) || (orangeTurn && isKing && left.firstChild.classList.contains("pink")) ) {
             possibleMoves.push(jumpLeft)
-            console.log("JUMP LEFT: ", jumpLeft)
         }
     }
 
     if(right != null && right.hasChildNodes() && jumpRight != null && jumpRight.classList.contains("o")){
         if((pinkTurn && right.firstChild.classList.contains("orange")) || (orangeTurn && isKing && right.firstChild.classList.contains("pink")) ) {
             possibleMoves.push(jumpRight)
-            console.log("JUMP RIGHT: ", jumpRight)
         }
     }
     
     if(backLeft != null && backLeft.hasChildNodes() && jumpBackLeft != null && jumpBackLeft.classList.contains("o")) {
         if((orangeTurn && backLeft.firstChild.classList.contains("pink")) || (pinkTurn && isKing && backLeft.firstChild.classList.contains("orange")) ) {
             possibleMoves.push(jumpBackLeft)
-            console.log("JUMP UP LEFT: ", jumpBackLeft)
         }
     }
     if(backRight != null && backRight.hasChildNodes() && jumpBackRight != null && jumpBackRight.classList.contains("o")) {
         if((orangeTurn && backRight.firstChild.classList.contains("pink")) || (pinkTurn && isKing && backRight.firstChild.classList.contains("orange")) ) {
             possibleMoves.push(jumpBackRight)
-            console.log("JUMP UP RIGHT: ", jumpBackRight)
         }
     }
     
@@ -210,9 +199,6 @@ function getMoves(selectedPiece) {
 
         //getJumps();
         getJumps()
-        console.log(selectedPiece);
-   
-        console.log("VALID")
     }
 
     else if(orangeTurn == true && selectedPiece.id > 12){
@@ -223,9 +209,6 @@ function getMoves(selectedPiece) {
         getSpaces();
 
         getJumps();
-        console.log(selectedPiece);
-   
-        console.log("VALID")
     }
 }
 
@@ -252,7 +235,6 @@ function removeEventsBlank() {
     for(let i = 0; i < possibleMoves.length; ++i){
         possibleMoves[i].style.border = "none";
         let c = possibleMoves[i];
-        console.log(possibleMoves[i]);
         possibleMoves[i].removeEventListener('click', makeMove)
     }
 }
@@ -293,7 +275,6 @@ function makeMove(){
     removePiece()
    
 
-    console.log(squares)
     if(pinkTurn){
         selected.classList.remove("pink");
     }
@@ -301,12 +282,8 @@ function makeMove(){
         selected.classList.remove("orange");
     }
     parent.removeChild(selected);
-    console.log(parent)
     parent.classList.add("o");
-    console.log(parent.classList)
 
-
-    console.log(moveChoice)
     let newChild = document.createElement("span");
     
     if(pinkTurn){
@@ -325,13 +302,11 @@ function makeMove(){
         removeEventsBlank();
         possibleMoves = []
         e.stopImmediatePropagation()
-        console.log(squares)
         selected = newChild;
         getMoves(newChild)
         addEventsBlank()
     })
 
-    console.log(moveChoice)
     removeEventsBlank()
     possibleMoves = [];
     updatePlayerTurn();
@@ -354,7 +329,6 @@ function addEvents() {
                 removeEventsBlank();
                 possibleMoves = []
                 e.stopImmediatePropagation()
-                console.log(squares)
                 selected = pinkPieces[i];
                 getMoves(pinkPieces[i])
                 addEventsBlank()
@@ -369,7 +343,6 @@ function addEvents() {
                 removeEventsBlank();
                 possibleMoves = []
                 e.stopImmediatePropagation()
-                console.log(squares)
                 selected = orangePieces[i];
                 getMoves(orangePieces[i])
                 addEventsBlank()
