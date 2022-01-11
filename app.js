@@ -4,6 +4,8 @@ let move;
 let pieceRemove = false;
 let pinkTurn = true;
 let orangeTurn = false;
+let pinkScore = 0;
+let orangeScore = 0;
 
 const table = document.querySelector("table");
 const squares = document.querySelectorAll("td");
@@ -21,8 +23,8 @@ let currPieces;
 
 
 // Set initial score
-playerScore1.innerHTML += "0";
-playerScore2.innerHTML += "0";
+playerScore1.innerHTML = `Score: ${orangeScore}`;
+playerScore2.innerHTML = `Score: ${pinkScore}`;
 
 currentPlayer.innerHTML = "Current Turn:  Player 2"
 
@@ -156,28 +158,32 @@ function getJumps() {
 
     if(left != null && left.hasChildNodes() && jumpLeft != null && jumpLeft.classList.contains("o")) {
         if((pinkTurn && left.firstChild.classList.contains("orange")) || (orangeTurn && isKing && left.firstChild.classList.contains("pink")) ) {
+            left.classList.add("remove");
             possibleMoves.push(jumpLeft)
-            console.log("JUMP LEFT")
+            console.log("JUMP LEFT: ", jumpLeft)
         }
     }
 
     if(right != null && right.hasChildNodes() && jumpRight != null && jumpRight.classList.contains("o")){
         if((pinkTurn && right.firstChild.classList.contains("orange")) || (orangeTurn && isKing && right.firstChild.classList.contains("pink")) ) {
+            right.classList.add("remove");
             possibleMoves.push(jumpRight)
-            console.log("JUMP RIGHT")
+            console.log("JUMP RIGHT: ", jumpRight)
         }
     }
     
     if(backLeft != null && backLeft.hasChildNodes() && jumpBackLeft != null && jumpBackLeft.classList.contains("o")) {
         if((orangeTurn && backLeft.firstChild.classList.contains("pink")) || (pinkTurn && isKing && backLeft.firstChild.classList.contains("orange")) ) {
+            backLeft.classList.add("remove");
             possibleMoves.push(jumpBackLeft)
-            console.log("JUMP UP LEFT")
+            console.log("JUMP UP LEFT: ", jumpBackLeft)
         }
     }
     if(backRight != null && backRight.hasChildNodes() && jumpBackRight != null && jumpBackRight.classList.contains("o")) {
         if((orangeTurn && backRight.firstChild.classList.contains("pink")) || (pinkTurn && isKing && backRight.firstChild.classList.contains("orange")) ) {
+            backRight.classList.add("remove")
             possibleMoves.push(jumpBackRight)
-            console.log("JUMP UP RIGHT")
+            console.log("JUMP UP RIGHT: ", jumpBackRight)
         }
     }
     
@@ -215,6 +221,26 @@ function getMoves(selectedPiece) {
     }
 }
 
+function removePiece() {
+    for(let i = 0; i < squares.length; i++){
+        if(squares[i].classList.contains("remove")){
+            if(squares[i].firstChild.classList.contains("pink")){
+                orangeScore++;
+                console.log("ADD TO ORANGE SCORE")
+                playerScore1.innerHTML = `Score: ${orangeScore}`;
+            }
+            else if(squares[i].firstChild.classList.contains("orange")){
+                console.log("ADD TO PINK SCORE")
+                pinkScore++;
+                playerScore2.innerHTML = `Score: ${pinkScore}`;
+            }
+            squares[i].classList.remove("remove")
+            squares[i].classList.add("o");
+            squares[i].removeChild(squares[i].firstChild)
+        }
+    }
+}
+
 function removeEventsBlank() {
     for(let i = 0; i < possibleMoves.length; ++i){
         possibleMoves[i].style.border = "none";
@@ -232,7 +258,9 @@ function makeMove(){
     console.log("LOCATION TO MOVE TO: ", moveChoice);
     let curId = selected.id;
 
-  
+   
+
+    removePiece()
 
     console.log(squares)
     if(pinkTurn){
@@ -261,6 +289,7 @@ function makeMove(){
     newChild.setAttribute('id', curId);
     moveChoice.classList.remove("o")
     moveChoice.appendChild(newChild);
+
     newChild.addEventListener('click', (e) => {
         removeEventsBlank();
         possibleMoves = []
@@ -270,6 +299,7 @@ function makeMove(){
         getMoves(newChild)
         addEventsBlank()
     })
+
     console.log(moveChoice)
     removeEventsBlank()
     possibleMoves = [];
