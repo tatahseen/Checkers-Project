@@ -1,4 +1,5 @@
 let possibleMoves = [];
+let possibleJumps = [];
 let move;
 let pieceRemove = false;
 let pinkTurn = true;
@@ -29,11 +30,13 @@ function updatePlayerTurn(){
     if(pinkTurn == true){
         pinkTurn = false;
         orangeTurn = true;
+        currentPlayer.innerHTML = "Current Turn:  Player 1"
         addEvents()
     }
     else if(pinkTurn == false){
         pinkTurn = true;
         orangeTurn = false;
+        currentPlayer.innerHTML = "Current Turn:  Player 2"
         addEvents()
     }
 }
@@ -141,34 +144,38 @@ function getJumps() {
     }
 
     if(rowIndex < 6) {
-        if(colIndex > 0){
+        if(colIndex > 1){
             jumpLeft = table.rows[rowIndex+2].cells[colIndex-2];
         }
-        if(colIndex < 7) {
+        if(colIndex < 6) {
             jumpRight = table.rows[rowIndex+2].cells[colIndex+2] 
         }
     }
-    console.log(left.childNodes.length);
+
 
     if(left.hasChildNodes() && jumpLeft != null && jumpLeft.classList.contains("o")) {
         if((pinkTurn && left.firstChild.classList.contains("orange")) || (orangeTurn && isKing && left.firstChild.classList.contains("pink")) ) {
             possibleMoves.push(jumpLeft)
+            console.log("JUMP LEFT")
         }
     }
-    if(right.hasChildNodes() > 0 && jumpRight != null && jumpRight.classList.contains("o")){
+    if(right.hasChildNodes() && jumpRight != null && jumpRight.classList.contains("o")){
         if((pinkTurn && right.firstChild.classList.contains("orange")) || (orangeTurn && isKing && right.firstChild.classList.contains("pink")) ) {
             possibleMoves.push(jumpRight)
+            console.log("JUMP RIGHT")
         }
     }
     
     if(backLeft.hasChildNodes() && jumpBackLeft != null && jumpBackLeft.classList.contains("o")) {
         if((orangeTurn && backLeft.firstChild.classList.contains("pink")) || (pinkTurn && isKing && backLeft.firstChild.classList.contains("orange")) ) {
             possibleMoves.push(jumpBackLeft)
+            console.log("JUMP UP LEFT")
         }
     }
     if(backRight.hasChildNodes() && jumpBackRight != null && jumpBackRight.classList.contains("o")) {
-        if((orangeTurn && backRight.firstChild.classList.contains("pink")) || (pinkTurn && isKing && backLeft.firstChild.classList.contains("orange")) ) {
-            possibleMoves.push(jumpBackLeft)
+        if((orangeTurn && backRight.firstChild.classList.contains("pink")) || (pinkTurn && isKing && backRight.firstChild.classList.contains("orange")) ) {
+            possibleMoves.push(jumpBackRight)
+            console.log("JUMP UP RIGHT")
         }
     }
     
@@ -199,7 +206,7 @@ function getMoves(selectedPiece) {
         // Get possible spaces
         getSpaces();
 
-        //getJumps();
+        getJumps();
         console.log(selectedPiece);
    
         console.log("VALID")
