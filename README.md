@@ -33,4 +33,3 @@ Next Steps:
 - Add in Kings
 - Add ability to reverse a move
 - Add ability to get instructions when clicking "How To Play"
-- Add in "New Game" button functionality
