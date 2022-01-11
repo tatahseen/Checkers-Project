@@ -7,6 +7,7 @@ let orangeTurn = false;
 let pinkScore = 0;
 let orangeScore = 0;
 
+const win = document.querySelector(".title")
 const table = document.querySelector("table");
 const squares = document.querySelectorAll("td");
 const pinkPieces = document.querySelectorAll(".pink");
@@ -22,7 +23,6 @@ let colIndex;
 let currPieces;
 
 
-// Set initial score
 playerScore1.innerHTML = `Score: ${orangeScore}`;
 playerScore2.innerHTML = `Score: ${pinkScore}`;
 
@@ -55,11 +55,14 @@ function updateSelectedPiece(curr) {
 }
 
 function checkWin() {
+    let body = document.querySelector("body")
     if(orangeScore == 12){
-        currentPlayer.innerHTML = "Player 1 Wins!!"
+        win.innerHTML = "Player 1 Wins!"
+        body.classList.add("game-over");
     }
     else if(pinkScore == 12) {
-        currentPlayer.innerHTML = "Player 2 Wins!!"
+        win.innerHTML = "Player 2 Wins!"
+        body.classList.add("game-over");
     }
 }
 
