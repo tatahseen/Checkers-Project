@@ -21,10 +21,10 @@ Getting Started:
 file:///Users/taliatahseen/Desktop/sei1213/unit1/projects/Checkers-Project/index.html
 
 How to play:
-    This game is created for two different players to play against one another. The bottom of the board contains player 1's pieces and the top of the board contains player 2's pieces. In this version, player 2 goes first.
-     A checker piece can only be moved one space forward in the diagonal direction towards the opponent's pieces. After the player 2 makes a move, it will be player 1's turn. The two players will alternate turns throughout the game until one player wins.
-    If there is an opponent piece in one of the forward diagonal spaces of the current player, they may jump and capture the opponent piece IF the space diagonal space after the opponent piece in the same direction has an empty space. This will continue until all pieces are captured or no more moves can be made.
-    If the player gets their piece to the other side of the board, this piece becomes a king. It will be able to move in any diagonal direction at this point.
+    - This game is created for two different players to play against one another. The bottom of the board contains player 1's pieces and the top of the board contains player 2's pieces. In this version, player 2 goes first.
+    - A checker piece can only be moved one space forward in the diagonal direction towards the opponent's pieces. After the player 2 makes a move, it will be player 1's turn. The two players will alternate turns throughout the game until one player wins.
+   - If there is an opponent piece in one of the forward diagonal spaces of the current player, they may jump and capture the opponent piece IF the space diagonal space after the opponent piece in the same direction has an empty space. This will continue until all pieces are captured or no more moves can be made.
+   - If the player gets their piece to the other side of the board, this piece becomes a king. It will be able to move in any diagonal direction at this point.
     
     
 Next Steps:
