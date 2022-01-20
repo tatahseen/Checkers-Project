@@ -52,6 +52,22 @@ function updateSelectedPiece(curr) {
     }
 }
 
+function makeKing(piece) {
+    console.log(squares)
+    if(pinkTurn){
+        for(let i = 56; i < 64; i++){
+            if(squares[i].hasChildNodes() && squares[i].firstChild.classList.contains("pink"))
+                squares[i].firstChild.classList.add("king")
+        }
+    }
+    else if (orangeTurn){
+        for(let i = 0; i < 8; i++){
+            if(table.rows[0].cells[i].id == piece.id && piece.classList.contains("orange"))
+                piece.classList.add("king")
+        }
+    }
+}
+
 function checkWin() {
     let body = document.querySelector("body")
     if(orangeScore == 12){
@@ -71,7 +87,6 @@ function getSpaces(){
     let backLeft;
     let backRight;
 
-    // Absolute value
     if(rowIndex > 0){
         if(colIndex > 0){
             backLeft = table.rows[rowIndex-1].cells[colIndex-1]
@@ -270,11 +285,14 @@ function makeMove(){
     moveChoice = this;
     let parent = selected.parentElement;
     let curId = selected.id;
+    let isKing = selected.classList.contains("king");
     
     checkRemovePiece(moveChoice)
     removePiece()
    
-
+    if(isKing){
+        selected.classList.remove("king")
+    }
     if(pinkTurn){
         selected.classList.remove("pink");
     }
@@ -293,6 +311,10 @@ function makeMove(){
         newChild.classList.add("orange");
     }
 
+    if(isKing){
+        newChild.classList.add("king");
+    }
+
  
     newChild.setAttribute('id', curId);
     moveChoice.classList.remove("o")
@@ -309,6 +331,7 @@ function makeMove(){
 
     removeEventsBlank()
     possibleMoves = [];
+    makeKing(newChild);
     updatePlayerTurn();
     checkWin();
 
