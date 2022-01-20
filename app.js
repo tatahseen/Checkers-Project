@@ -53,7 +53,6 @@ function updateSelectedPiece(curr) {
 }
 
 function makeKing(piece) {
-    console.log(squares)
     if(pinkTurn){
         for(let i = 56; i < 64; i++){
             if(squares[i].hasChildNodes() && squares[i].firstChild.classList.contains("pink"))
